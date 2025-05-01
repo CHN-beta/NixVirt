@@ -46,7 +46,8 @@ let
           type = "hvm";
           arch = "x86_64";
           machine = machinetype;
-          boot = [{ dev = "cdrom"; } { dev = "hd"; }];
+          boot = [{ dev = "hd"; } { dev = "cdrom"; }];
+          bootmenu = { enable = true; timeout = 15000; };
         };
       features =
         {

@@ -69,7 +69,7 @@ let
               ]
               (sub "path" typePath))
             (subelem "boot" [ (subattr "dev" typeString) ] [ ])
-            (subelem "bootmenu" [ (subattr "enable" typeBoolYesNo) ] [ ])
+            (subelem "bootmenu" [ (subattr "enable" typeBoolYesNo) (subattr "timeout" typeInt) ] [ ])
             (subelem "kernel" [ ] (sub "path" typePath))
             (subelem "initrd" [ ] (sub "path" typePath))
             (subelem "init" [ ] typePath)
