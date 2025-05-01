@@ -496,6 +496,7 @@ let
                   (subattr "type" typeString)
                   (subattr "autoport" typeBoolYesNo)
                   (subattr "port" typeInt)
+                  (subattr "password" typeString)
                 ]
                 [
                   (subelem "listen" [ (subattr "type" typeString) ] [ ])
