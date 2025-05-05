@@ -25,6 +25,7 @@ let
         then { dev = "vda"; bus = "virtio"; }
         else
           { dev = "sda"; bus = "sata"; };
+      boot.order = 1;
     };
   base = machinetype: cdtarget:
     { name
@@ -46,7 +47,6 @@ let
           type = "hvm";
           arch = "x86_64";
           machine = machinetype;
-          boot = [{ dev = "hd"; } { dev = "cdrom"; }];
           bootmenu = { enable = true; timeout = 15000; };
         };
       features =
@@ -81,6 +81,7 @@ let
                 source = mksource install_vol;
                 target = cdtarget;
                 readonly = true;
+                boot.order = 10;
               }
             ];
           interface =
