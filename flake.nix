@@ -41,7 +41,7 @@
 
       mklib = import ./lib.nix;
 
-      modules = import ./modules.nix { inherit packages moduleHelperFile; };
+      modules = import ./modules.nix { inherit moduleHelperFile; };
 
       stuff = { inherit packages; };
     in

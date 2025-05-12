@@ -1,6 +1,6 @@
-{ packages, moduleHelperFile }:
+{ moduleHelperFile }:
 let
-  module = isHomeManager: { config, lib, ... }:
+  module = isHomeManager: { config, lib, pkgs, ... }:
     let
       cfg = config.virtualisation.libvirt;
       defaultConnectionURI = if isHomeManager then "qemu:///session" else "qemu:///system";
@@ -45,7 +45,7 @@ let
           package = lib.mkOption
             {
               type = package;
-              default = packages.libvirt;
+              default = pkgs.libvirt;
               description = "libvirt package to use";
             };
           verbose = lib.mkOption
@@ -131,12 +131,12 @@ let
             scriptForConnection = with builtins; connection:
               let
                 opts = getAttr connection cfg.connections;
-                jsonFile = packages.writeText "nixvirt module script" (builtins.toJSON opts);
+                jsonFile = pkgs.writeText "nixvirt module script" (builtins.toJSON opts);
                 verboseFlag = if cfg.verbose then "-v" else "";
               in
               "${moduleHelperFile cfg.package} ${verboseFlag} --connect ${connection} ${jsonFile}\n";
 
-            extraPackages = [ packages.qemu-utils ] ++ (if cfg.swtpm.enable then [ packages.swtpm ] else [ ]);
+            extraPackages = [ pkgs.qemu-utils ] ++ (if cfg.swtpm.enable then [ pkgs.swtpm ] else [ ]);
             extraPaths = concatStrMap (p: "${p}/bin:") extraPackages;
             script = "PATH=${extraPaths}$PATH\n" + concatStrMap scriptForConnection (builtins.attrNames cfg.connections);
           in
@@ -157,7 +157,7 @@ let
                     if cfg.swtpm.enable then
                       {
                         enable = true;
-                        package = packages.swtpm;
+                        package = pkgs.swtpm;
                       }
                     else { };
                 };
