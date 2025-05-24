@@ -1,6 +1,7 @@
 let
   xml = import ./xml.nix;
   generate = import ./generate.nix;
+  bandwidthElem = import ./netbandwidth.nix;
 
   # https://libvirt.org/formatdomain.html
   process = with generate;
@@ -416,6 +417,7 @@ let
                   (subattr "trustGuestRxFilters" typeBoolYesNo)
                 ]
                 [
+                  bandwidthElem
                   (subelem "driver" [
                     (subattr "name" typeString)
                     (subattr "txmode" typeString)
@@ -499,7 +501,7 @@ let
                   (subattr "passwd" typeString)
                 ]
                 [
-                  (subelem "listen" [ (subattr "type" typeString) ] [ ])
+                  (subelem "listen" [ (subattr "type" typeString) (subattr "address" typeString) ] [ ])
                   (subelem "image" [ (subattr "compression" typeBoolOnOff) ] [ ])
                   (subelem "gl" [ (subattr "enable" typeBoolYesNo) (subattr "rendernode" typeString) ] [ ])
                 ])
